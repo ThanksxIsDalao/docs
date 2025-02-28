@@ -16,12 +16,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 安装依赖
+      # 设置 Node.js 环境为 18
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # 你可以根据需要选择 Node.js 的版本
+          node-version: '18'  # 使用 Node 18 版本
 
+      # 安装项目依赖
       - name: Install dependencies
         run: |
           npm install  # 安装项目的依赖
@@ -29,11 +30,11 @@ jobs:
       # 构建 VitePress 静态文件
       - name: Build VitePress site
         run: |
-          npm run docs:build  # 使用 VitePress 构建静态页面，确保你的 package.json 中有定义 build 脚本
+          npm run docs:build  # 使用 npm 脚本构建静态页面，确保你的 package.json 中有 docs:build 脚本
 
       # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/.vitepress/dist  # 这里是 VitePress 默认的构建输出目录
+          publish_dir: ./docs/.vitepress/dist  # VitePress 默认构建输出目录
